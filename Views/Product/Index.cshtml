@@ -1,0 +1,71 @@
+﻿@model List<Product>
+@{
+}
+<h2 class="text-center mb-5">List of Pateints</h2>
+<div class="mb-5 row ">
+    <div class="col">
+        <a class="btn btn-primary" asp-controller="Product"  asp-action="Create">New Patient</a>
+    </div>
+    <div class="col">
+
+    </div>
+
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Age</th>
+            <th>Sex</th>
+            <th>Adrress</th>
+            <th>City</th>
+            <th>Phone_Number</th>
+            <th>Entry_Date</th>
+            <th>Ref Dr id</th>
+            <th>Diagonose</th>
+            <th>Department</th>
+            <th>Action</th>
+          
+            
+
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model ?? new List<Product>())
+        {
+            if (product == null) continue; // skip null items
+
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.name</td>
+                <td>@product.age</td>
+                <td>@product.sex</td>
+                <td>@product.adrress</td>
+                <td>@product.city</td>
+                <td>@product.phone_number</td>
+                <td>@product.entry_date.ToString("MM/dd/yyyy")</td>
+                <td>@product.referencing_doctor_id</td>
+                <td>@product.diagnosis</td>
+                <td>@product.department_id</td>
+                <td>
+                    <a class="btn btn-primary btn-sm" asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id">Edit</a>
+                    <form asp-action="Delete" method="post" style="display: inline;">
+                        <input type="hidden" name="id" value="@product.Id" />
+                        @Html.AntiForgeryToken()
+                        <button type="submit" class="btn btn-danger btn-sm"
+                                onclick="return confirm('Are you sure you want to delete this patient?')">
+                            Delete
+                        </button>
+                    </form>
+
+                @*     <a class="btn btn-danger btn-sm" asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id">Delete</a> *@
+                @* </td> *@
+            </tr>
+        }
+
+
+
+    </tbody>
+
+</table>

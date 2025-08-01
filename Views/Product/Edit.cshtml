@@ -1,0 +1,242 @@
+﻿@* @model ProductDto *@
+@* @{ *@
+@* } *@
+@* <div class="row"> *@
+@*     <div class="col-md-8 mx-auto rounded border p-3 "> *@
+@*         <h2 class="text-center mb-5"> New Patient</h2> *@
+
+
+
+@*         <form method="post" enctype="multipart/form-data"> *@
+@*             <div class="row mb-3"> *@
+@*                 <label class="col-sm-4 col-form-label">Id</label> *@
+@*                 <div class="col-sm-8"> *@
+@*                     <input class="form-control-plaintext" readonly  value="@ViewData["id"]" /> *@
+                 
+
+@*                 </div> *@
+@*             </div> *@
+
+@*             <div class="row mb-3"> *@
+@*                 <label class="col-sm-4 col-form-label">Name</label> *@
+@*                 <div class="col-sm-8"> *@
+@*                     <input class="form-control" asp-for="name" /> *@
+@*                     <span asp-validation-for="name" class="text-danger"></span> *@
+@*                 </div> *@
+@*             </div> *@
+
+@*             <div class="row mb-3"> *@
+@*                 <label class="col-sm-4 col-form-label">Age</label> *@
+@*                 <div class="col-sm-8"> *@
+@*                     <input class="form-control" asp-for="age" /> *@
+@*                     <span asp-validation-for="age" class="text-danger"></span> *@
+
+@*                 </div> *@
+@*             </div> *@
+
+@*             <div class="row mb-3"> *@
+@*                 <label class="col-sm-4 col-form-label"> Sex</label> *@
+@*                 <div class="col-sm-8"> *@
+
+@*                     <select class="form-select" asp-for="sex"> *@
+@*                         <option value="Male">Male</option> *@
+@*                         <option value="Female">Female</option> *@
+@*                         <option value="Female">Others</option> *@
+@*                     </select> *@
+
+
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="row mb-3"> *@
+@*                 <label class="col-sm-4 col-form-label">Address</label> *@
+@*                 <div class="col-sm-8"> *@
+@*                     <input class="form-control" asp-for="adrress" /> *@
+@*                     <span asp-validation-for="adrress" class="text-danger"></span> *@
+
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="row mb-3"> *@
+@*                 <label class="col-sm-4 col-form-label">City</label> *@
+@*                 <div class="col-sm-8"> *@
+@*                     <input class="form-control" asp-for="city" /> *@
+@*                     <span asp-validation-for="city" class="text-danger"></span> *@
+
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="row mb-3"> *@
+@*                 <label class="col-sm-4 col-form-label">Phone Number</label> *@
+@*                 <div class="col-sm-8"> *@
+@*                     <input class="form-control" asp-for="phone_number" /> *@
+@*                     <span asp-validation-for="phone_number" class="text-danger"></span> *@
+
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="row mb-3"> *@
+@*                 <label class="col-sm-4 col-form-label">Entry Date</label> *@
+@*                 <div class="col-sm-8"> *@
+@*                     <input class="form-control-plaintext" readonly value="@ViewData["entry_date"]" /> *@
+
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="row mb-3"> *@
+@*                 <label class="col-sm-4 col-form-label">Ref Dr Id</label> *@
+@*                 <div class="col-sm-8"> *@
+@*                     <input class="form-control" asp-for="referencing_doctor_id" /> *@
+@*                     <span asp-validation-for="referencing_doctor_id " class="text-danger"></span> *@
+
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="row mb-3"> *@
+@*                 <label class="col-sm-4 col-form-label">Diagonse</label> *@
+@*                 <div class="col-sm-8"> *@
+@*                     <input class="form-control" asp-for="diagnosis" /> *@
+@*                     <span asp-validation-for="diagnosis" class="text-danger"></span> *@
+
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="row mb-3"> *@
+@*                 <label class="col-sm-4 col-form-label">Department</label> *@
+@*                 <div class="col-sm-8"> *@
+@*                     <input class="form-control" asp-for="department_id" /> *@
+@*                     <span asp-validation-for="department_id" class="text-danger"></span> *@
+
+@*                 </div> *@
+@*             </div> *@
+@*             <div class="row"> *@
+@*                 <div class="offset-sm-4 col-sm-4 d-grid"> *@
+@*                     <button type="submit" class="btn btn-primary">Submit</button> *@
+@*                 </div> *@
+@*                 <div class="col-sm-4 d-grid"> *@
+@*                     <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Index" role="button"> Cancel</a> *@
+@*                 </div> *@
+@*             </div> *@
+
+
+@*         </form> *@
+
+
+@*     </div> *@
+
+
+@* </div> *@
+
+
+
+@model ProductDto
+@{
+    ViewData["Title"] = "Edit Patient";
+}
+
+<div class="row">
+    <div class="col-md-8 mx-auto rounded border p-3">
+        <h2 class="text-center mb-5">Edit Patient</h2>
+
+        @if (ViewBag.Error != null)
+        {
+            <div class="alert alert-danger">@ViewBag.Error</div>
+        }
+
+        <form method="post">
+            <input type="hidden"  value="@ViewData["id"]" />
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Name</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="name" />
+                    <span asp-validation-for="name" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Age</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="age" />
+                    <span asp-validation-for="age" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Sex</label>
+                <div class="col-sm-8">
+                    <select class="form-select" asp-for="sex">
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <span asp-validation-for="sex" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Address</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="adrress" />
+                    <span asp-validation-for="adrress" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">City</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="city" />
+                    <span asp-validation-for="city" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Phone Number</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="phone_number" />
+                    <span asp-validation-for="phone_number" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Entry Date</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="entry_date" type="date" />
+                    <span asp-validation-for="entry_date" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Ref Dr ID</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="referencing_doctor_id" />
+                    <span asp-validation-for="referencing_doctor_id" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Diagnosis</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="diagnosis" />
+                    <span asp-validation-for="diagnosis" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label class="col-sm-4 col-form-label">Department</label>
+                <div class="col-sm-8">
+                    <input class="form-control" asp-for="department_id" />
+                    <span asp-validation-for="department_id" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="offset-sm-4 col-sm-4 d-grid">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+                <div class="col-sm-4 d-grid">
+                    <a class="btn btn-outline-primary" asp-controller="Product" asp-action="Index">Cancel</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
