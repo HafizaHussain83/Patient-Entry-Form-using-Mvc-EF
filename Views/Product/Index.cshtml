@@ -1,71 +1,166 @@
-﻿@model List<Product>
-@{
-}
-<h2 class="text-center mb-5">List of Pateints</h2>
-<div class="mb-5 row ">
-    <div class="col">
-        <a class="btn btn-primary" asp-controller="Product"  asp-action="Create">New Patient</a>
-    </div>
-    <div class="col">
+﻿
+@model List<Product>
 
+@{
+    ViewData["Title"] = "Patient Records";
+}
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+<div class="container mt-5">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold text-primary">
+            <i class="bi bi-hospital"></i> Patient Records
+        </h2>
+        <a class="btn btn-success shadow-sm px-4" asp-controller="Product" asp-action="Create">
+            <i class="bi bi-person-plus"></i> Add Patient
+        </a>
+    </div>
+
+    <!-- Search & Filter -->
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-body bg-light">
+            <form method="get" asp-action="Index" class="row g-2 align-items-center">
+                <div class="col-md-5">
+                    <input type="text" name="search" class="form-control"
+                           placeholder="🔍 Search patients by name, phone, or doctor..." />
+                </div>
+                <div class="col-md-3">
+                    <select name="department" class="form-select">
+                        <option value="">-- Filter by Department --</option>
+                        <option value="1">Cardiology</option>
+                        <option value="2">Neurology</option>
+                        <option value="3">Orthopedics</option>
+                        <option value="4">Dermatology</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">
+                        <i class="bi bi-funnel"></i> Apply
+                    </button>
+                </div>
+                <div class="col-md-2">
+                    <a asp-action="Index" class="btn btn-outline-secondary w-100">
+                        <i class="bi bi-arrow-clockwise"></i> Reset
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Patient Records Table -->
+    <div class="card shadow-lg border-0 rounded">
+        <div class="card-body p-0">
+            <div class="table-responsive" style="max-height: 600px; overflow-y: auto;">
+                <table class="table table-striped table-hover align-middle mb-0">
+                    <thead class="table-dark sticky-top">
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Age</th>
+                            <th>Sex</th>
+                            <th>City</th>
+                            <th>Phone</th>
+                            <th>Entry Date</th>
+                            <th>Doctor Name</th>
+                            <th>Doctor ID</th>
+                            <th>Department ID</th>
+                            <th>Diagnosis</th>
+                            
+                            <th>Room</th>
+                            <th>Bed</th>
+                            <th>Floor</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var patient in Model)
+                            {
+                                <tr>
+                                    <td>#@patient.Id</td>
+                                    <td class="fw-semibold">@patient.name</td>
+                                    <td>@patient.age</td>
+                                    <td>
+                                        @if (patient.sex == "Male")
+                                        {
+                                            <span class="badge bg-primary">Male</span>
+                                        }
+                                        else if (patient.sex == "Female")
+                                        {
+                                            <span class="badge bg-danger">Female</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Other</span>
+                                        }
+                                    </td>
+                                    <td>@patient.city</td>
+                                    <td>@patient.phone_number</td>
+                                    <td>
+                                        @(patient.entry_date.HasValue ? patient.entry_date.Value.ToString("dd-MMM-yyyy") : "-")
+                                    </td>
+                                    <td class="fw-bold text-success">@patient.RefDr</td>
+                                    <td>@patient.referencing_doctor_id</td>
+                                    <td>@patient.department_id</td>
+                                    <td>@patient.diagnosis</td>
+                                    <td>@patient.Room?.RoomNo</td>
+                                    <td>@patient.Room?.BedNo</td>
+                                    <td>@patient.Room?.Floor</td>
+
+
+                                    <td class="text-center">
+                                        <div class="btn-group" role="group">
+                                            <a class="btn btn-sm btn-outline-primary"
+                                               asp-controller="Product"
+                                               asp-action="Edit"
+                                               asp-route-id="@patient.Id"
+                                               data-bs-toggle="tooltip" title="Edit Patient">
+                                                <i class="bi bi-pencil-square"></i>
+                                            </a>
+                                            <form asp-action="Delete"
+                                                  asp-route-id="@patient.Id"
+                                                  method="post"
+                                                  style="display:inline;">
+                                                <button type="submit"
+                                                        class="btn btn-sm btn-outline-danger"
+                                                        onclick="return confirm('Are you sure you want to delete this patient?')"
+                                                        data-bs-toggle="tooltip" title="Delete Patient">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+
+
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="12" class="text-center text-muted py-4">
+                                    <i class="bi bi-info-circle"></i> No patient records found.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
     </div>
 
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Age</th>
-            <th>Sex</th>
-            <th>Adrress</th>
-            <th>City</th>
-            <th>Phone_Number</th>
-            <th>Entry_Date</th>
-            <th>Ref Dr id</th>
-            <th>Diagonose</th>
-            <th>Department</th>
-            <th>Action</th>
-          
-            
 
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var product in Model ?? new List<Product>())
-        {
-            if (product == null) continue; // skip null items
+<script>
+    // Bootstrap tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    })
+</script>
 
-            <tr>
-                <td>@product.Id</td>
-                <td>@product.name</td>
-                <td>@product.age</td>
-                <td>@product.sex</td>
-                <td>@product.adrress</td>
-                <td>@product.city</td>
-                <td>@product.phone_number</td>
-                <td>@product.entry_date.ToString("MM/dd/yyyy")</td>
-                <td>@product.referencing_doctor_id</td>
-                <td>@product.diagnosis</td>
-                <td>@product.department_id</td>
-                <td>
-                    <a class="btn btn-primary btn-sm" asp-controller="Product" asp-action="Edit" asp-route-id="@product.Id">Edit</a>
-                    <form asp-action="Delete" method="post" style="display: inline;">
-                        <input type="hidden" name="id" value="@product.Id" />
-                        @Html.AntiForgeryToken()
-                        <button type="submit" class="btn btn-danger btn-sm"
-                                onclick="return confirm('Are you sure you want to delete this patient?')">
-                            Delete
-                        </button>
-                    </form>
-
-                @*     <a class="btn btn-danger btn-sm" asp-controller="Product" asp-action="Delete" asp-route-id="@product.Id">Delete</a> *@
-                @* </td> *@
-            </tr>
-        }
-
-
-
-    </tbody>
-
-</table>
